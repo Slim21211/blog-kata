@@ -16,11 +16,11 @@ export const fetchArticlesFailure = (error) => ({
   payload: error,
 });
 
-export const fetchArticles = () => {
+export const fetchArticles = (offset) => {
   return async (dispatch) => {
     dispatch(fetchArticlesRequest());
     try {
-      const response = await fetch('https://blog.kata.academy/api/articles');
+      const response = await fetch(`https://blog.kata.academy/api/articles?offset=${offset}`);
       const data = await response.json();
       // const articles = data.articles;
       // const articlesCount = data.articlesCount;

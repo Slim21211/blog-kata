@@ -1,8 +1,11 @@
 import React from 'react';
+import { format } from 'date-fns';
+
+import noAvatar from '../../../Assets/Noavatar.png';
 
 import styles from './post.module.scss';
 
-const Post = () => {
+const Post = ({ title, tagList, user, date, description, avatar }) => {
   const {
     'post-wrapper': postWrapper,
     'post-header-wrapper': postHeaderWrapper,
@@ -19,33 +22,41 @@ const Post = () => {
     'post-user-name': postUserName,
     'post-date': postDate,
     'post-user-image': postUserImage,
+    'tags-wrapper': tagsWrapper,
   } = styles;
+
+  const tags = tagList.map((item) => {
+    return (
+      <div className={postTags} key={Math.floor(Math.random() * 100)}>
+        {item}
+      </div>
+    );
+  });
+
+  const formattedDate = format(new Date(date), 'MMMM d, yyyy');
+
   return (
     <div className={postWrapper}>
       <div className={postHeaderWrapper}>
         <div className={postTitleWrapper}>
           <div className={postTitleContainer}>
             <div className={postTitleLine}>
-              <div className={postTitle}>Some article title</div>
+              <div className={postTitle}>{title}</div>
               <div className={postLikeImage}></div>
               <span className={postLikeCount}>12</span>
             </div>
-            <div className={postTags}>Tag1</div>
+            <div className={tagsWrapper}>{tags}</div>
           </div>
         </div>
         <div className={posrUserWrapper}>
           <div className={postUserInfo}>
-            <div className={postUserName}>John Doe</div>
-            <div className={postDate}>March 5, 2020 </div>
+            <div className={postUserName}>{user}</div>
+            <div className={postDate}>{formattedDate}</div>
           </div>
-          <img src="#" alt="avatar" className={postUserImage}></img>
+          <img src={avatar ? avatar : noAvatar} alt="avatar" className={postUserImage}></img>
         </div>
       </div>
-      <div className={postDescription}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat.{' '}
-      </div>
+      <div className={postDescription}>{description}</div>
     </div>
   );
 };

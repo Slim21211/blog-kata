@@ -57,18 +57,24 @@
     color:  rgba(0, 0, 0, 0.75);
 }
 
+.tags-wrapper {
+    display: flex;
+}
+
 .post-tags {
-    width: 38px;
+    width: auto;
     height: 20px;
     border-radius: 2px;
     border: 1px solid rgba(0, 0, 0, 0.50); 
+    padding: 4px;
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 18px;
+    line-height: 11px;
     color: rgba(0, 0, 0, 0.50);
     text-align: center;
+    margin-right: 5px;
 }
 
 .post-user-wrapper {
@@ -86,6 +92,11 @@
     font-style: normal;
     font-weight: 400;
     color:  rgba(0, 0, 0, 0.85);
+}
+
+.post-user-image {
+    width: 46px;
+    height: 46px;
 }
 
 .post-date {

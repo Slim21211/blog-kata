@@ -1,5 +1,6 @@
 import { React, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
@@ -13,13 +14,15 @@ export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchArticles());
+    dispatch(fetchArticles(0));
   }, []);
 
   return (
-    <div className={mainWrapper}>
-      <Header />
-      <PostsList />
-    </div>
+    <Router>
+      <div className={mainWrapper}>
+        <Header />
+        <Route exact path="/her" component={PostsList} />
+      </div>
+    </Router>
   );
 };
