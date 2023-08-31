@@ -6,6 +6,7 @@ import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
 import PostsList from '../Posts-list/posts-list';
 import Article from '../Article/article';
+import Registration from '../Registration/registration';
 
 import styles from './app.module.scss';
 
@@ -22,7 +23,8 @@ export const App = () => {
     <Router>
       <div className={mainWrapper}>
         <Header />
-        <Redirect from="/" to="/page/1" />
+        <Redirect from="/" to="/registration" />
+        <Route path="/registration" component={Registration} />
         <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />
       </div>
