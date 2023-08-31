@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
+import { useParams, useHistory, Link } from 'react-router-dom';
 
 import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 
@@ -16,14 +17,18 @@ const PostsList = () => {
   const error = useSelector((state) => state.articleReducer.error);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(articles);
-  console.log(articlesCount);
+  const { pageNumber } = useParams();
+  const history = useHistory();
 
   const changePage = (page) => {
-    console.log(page);
     setCurrentPage(page);
-    dispatch(fetchArticles((page - 1) * 20));
+
+    history.push(`/page/${page}`);
   };
+
+  useEffect(() => {
+    dispatch(fetchArticles((pageNumber - 1) * 20));
+  }, [dispatch, pageNumber]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -34,23 +39,25 @@ const PostsList = () => {
   return (
     <div className={postsListWrapper}>
       {articles.map((item) => {
-        const { title, tagList, author, updatedAt, body } = item;
-
+        const { title, tagList, author, updatedAt, body, favoritesCount, slug } = item;
         return (
-          <Post
-            key={item.slug}
-            title={title}
-            tagList={tagList}
-            user={author.username}
-            date={updatedAt}
-            description={body}
-            avatar={author.image}
-          />
+          <Link to={`/article/${slug}`} key={item.slug}>
+            <Post
+              title={title}
+              tagList={tagList}
+              user={author.username}
+              date={updatedAt}
+              description={body}
+              avatar={author.image}
+              likes={favoritesCount}
+            />
+          </Link>
         );
       })}
       <Pagination
         defaultCurrent={currentPage}
-        total={(articlesCount / 20) * 10}
+        current={parseInt(pageNumber, 10)}
+        total={Math.ceil((articlesCount / 20) * 10)}
         showSizeChanger={false}
         style={{ marginTop: '20px', textAlign: 'center' }}
         onChange={changePage}

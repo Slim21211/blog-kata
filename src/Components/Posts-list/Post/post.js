@@ -5,7 +5,7 @@ import noAvatar from '../../../Assets/Noavatar.png';
 
 import styles from './post.module.scss';
 
-const Post = ({ title, tagList, user, date, description, avatar }) => {
+const Post = ({ title, tagList, user, date, description, avatar, likes }) => {
   const {
     'post-wrapper': postWrapper,
     'post-header-wrapper': postHeaderWrapper,
@@ -43,7 +43,7 @@ const Post = ({ title, tagList, user, date, description, avatar }) => {
             <div className={postTitleLine}>
               <div className={postTitle}>{title}</div>
               <div className={postLikeImage}></div>
-              <span className={postLikeCount}>12</span>
+              <span className={postLikeCount}>{likes}</span>
             </div>
             <div className={tagsWrapper}>{tags}</div>
           </div>

@@ -1,10 +1,11 @@
 import { React, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
 import PostsList from '../Posts-list/posts-list';
+import Article from '../Article/article';
 
 import styles from './app.module.scss';
 
@@ -21,7 +22,9 @@ export const App = () => {
     <Router>
       <div className={mainWrapper}>
         <Header />
-        <Route exact path="/her" component={PostsList} />
+        <Redirect from="/" to="/page/1" />
+        <Route path="/page/:pageNumber" component={PostsList} />
+        <Route path="/article/:slug" component={Article} />
       </div>
     </Router>
   );

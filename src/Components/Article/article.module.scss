@@ -1,32 +1,35 @@
-.post-wrapper {
+* {
+    text-decoration: none;
+}
+
+.article-wrapper {
     margin: 0 auto;
     margin-top: 26px;
     padding: 15px;
     width: 941px;
-    height: 140px;
+    height: auto;
     border-radius: 5px;
     background-color: #fff;
-    overflow: hidden;
 }
 
-.post-header-wrapper {
+.article-header-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.post-header-wrapper:first-child {
+.article-header-wrapper:first-child {
     margin-bottom: 7px;
 }
 
-.post-title-line {
+.article-title-line {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 6px;
 }
 
-.post-title {
+.article-title {
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-style: normal;
@@ -34,26 +37,22 @@
     color:#1890FF;
 }
 
-.post-title:hover {
-    cursor: pointer;
-}
-
-.post-title:nth-child(1) {
+.article-title:nth-child(1) {
     margin-right: 13px;
 }
 
-.post-like-image {
+.article-like-image {
     width: 16px;
     height: 16px;
     margin-right: 5px;
-    background: no-repeat url('../../../Assets/heart\ 1.svg');
+    background: no-repeat url('../../Assets/heart\ 1.svg');
 }
 
-.post-like-image:hover {
+.article-like-image:hover {
     cursor: pointer;
 }
 
-.post-like-count {
+.article-like-count {
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-style: normal;
@@ -65,7 +64,7 @@
     display: flex;
 }
 
-.post-tags {
+.article-tags {
     width: auto;
     height: 20px;
     border-radius: 2px;
@@ -81,16 +80,16 @@
     margin-right: 5px;
 }
 
-.post-user-wrapper {
+.article-user-wrapper {
     display: flex;
     align-items: center;
 }
 
-.post-user-info {
+.article-user-info {
     margin-right: 12px;
 }
 
-.post-user-name {
+.article-user-name {
     font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-style: normal;
@@ -98,12 +97,12 @@
     color:  rgba(0, 0, 0, 0.85);
 }
 
-.post-user-image {
+.article-user-image {
     width: 46px;
     height: 46px;
 }
 
-.post-date {
+.article-date {
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-style: normal;
@@ -111,7 +110,7 @@
     color: rgba(0, 0, 0, 0.50);
 }
 
-.post-description {
+.article-description {
     width: 682px;
     font-family: 'Inter', sans-serif;
     font-size: 12px;
