@@ -23,7 +23,7 @@ export const App = () => {
     <Router>
       <div className={mainWrapper}>
         <Header />
-        <Redirect from="/" to="/registration" />
+        <Redirect from="/" to="/page/1" />
         <Route path="/registration" component={Registration} />
         <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />

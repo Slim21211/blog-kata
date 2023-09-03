@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import styles from './header.module.scss';
 
@@ -16,6 +17,12 @@ const Header = () => {
     'logout-button': logOutButton,
   } = styles;
 
+  const history = useHistory();
+
+  const onClick = () => {
+    history.push('/registration');
+  };
+
   return (
     <div className={headerWrapper}>
       <Link to="/page/1" className={headerTitle}>
@@ -23,7 +30,9 @@ const Header = () => {
       </Link>
       <div>
         <button className={signInButton}>Sign In</button>
-        <button className={signUpButton}>Sign Up</button>
+        <button className={signUpButton} onClick={onClick}>
+          Sign Up
+        </button>
         <button className={createButton}>Create article</button>
         <div className={userWrapper}>
           <div className={userName}>John Doe</div>

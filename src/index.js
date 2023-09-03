@@ -6,11 +6,13 @@ import { Provider } from 'react-redux';
 
 import { articleReducer } from './Redux/Reducers/fetch-articles-reducer';
 import { oneArticleReducer } from './Redux/Reducers/fetch-one-article-reducer';
+import registrationReducer from './Redux/Reducers/fetch-registration-reducer';
 import { App } from './Components/App/app';
 
 const rootReducer = combineReducers({
   articleReducer,
   oneArticleReducer,
+  registrationReducer,
 });
 
 const loggerMiddleware = (store) => (next) => (action) => {
