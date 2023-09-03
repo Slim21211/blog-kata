@@ -42,7 +42,7 @@ const Registration = () => {
     console.log(data);
     console.log(registrationUser(data));
     dispatch(registrationUser(data));
-    history.push('/page/1');
+    history.push('/login');
   };
 
   return (
@@ -130,7 +130,7 @@ const Registration = () => {
       </form>
       <div className={questionWrapper}>
         <span className={question}>Already have an account? </span>
-        <Link to="/page/1">
+        <Link to="/login">
           <span className={link}>Sign In.</span>
         </Link>
       </div>

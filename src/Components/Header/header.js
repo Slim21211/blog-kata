@@ -19,8 +19,12 @@ const Header = () => {
 
   const history = useHistory();
 
-  const onClick = () => {
+  const onSignUp = () => {
     history.push('/registration');
+  };
+
+  const onSignIn = () => {
+    history.push('/login');
   };
 
   return (
@@ -29,8 +33,10 @@ const Header = () => {
         Realworld Blog
       </Link>
       <div>
-        <button className={signInButton}>Sign In</button>
-        <button className={signUpButton} onClick={onClick}>
+        <button className={signInButton} onClick={onSignIn}>
+          Sign In
+        </button>
+        <button className={signUpButton} onClick={onSignUp}>
           Sign Up
         </button>
         <button className={createButton}>Create article</button>

@@ -7,6 +7,7 @@ import Header from '../Header/header';
 import PostsList from '../Posts-list/posts-list';
 import Article from '../Article/article';
 import Registration from '../Registration/registration';
+import Login from '../Login/login';
 
 import styles from './app.module.scss';
 
@@ -25,6 +26,7 @@ export const App = () => {
         <Header />
         <Redirect from="/" to="/page/1" />
         <Route path="/registration" component={Registration} />
+        <Route path="/login" component={Login} />
         <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />
       </div>
