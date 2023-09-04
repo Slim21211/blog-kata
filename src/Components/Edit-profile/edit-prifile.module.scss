@@ -1,0 +1,178 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 384px;
+    height: auto;
+    padding: 48px 32px;
+    border-radius: 6px;
+    border: 1px solid  #D9D9D9;
+    background:  #FFF;
+    box-shadow: 0px 0.6088px 2.93329px 0px rgba(0, 0, 0, 0.02), 0px 1.46302px 7.04911px 0px rgba(0, 0, 0, 0.03), 0px 2.75474px 13.27285px 0px rgba(0, 0, 0, 0.04), 0px 4.91399px 23.67649px 0px rgba(0, 0, 0, 0.04), 0px 9.19107px 44.28427px 0px rgba(0, 0, 0, 0.05), 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
+    text-align: center;
+}
+
+.title {
+    margin-bottom: 21px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    color: #262626;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.label {
+    text-align: start;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    color: #262626;
+}
+
+.input {
+    width: 320px;
+    height: 40px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    background: #FFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.input::placeholder {
+    color: #BFBFBF; 
+  }
+
+.input-wrong {
+    width: 320px;
+    height: 40px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #F5222D;
+    background: #FFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    color: #BFBFBF;
+}
+
+.input-descr {
+    margin-top: -10px;
+    text-align: start;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    color: #F5222D;
+}
+
+.line {
+    width: 320px;
+    height: 1px;
+    background: #E8E8E8;
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+
+.name {
+    color: #4A4A4A;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.check {
+    text-align: start;
+    padding-left: 25px;
+}
+
+.check-input {
+    appearance: none;
+}
+
+.check-box {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #fff no-repeat;
+    border: 1px solid grey;
+    border-radius: 2px;
+    margin-left: -25px;
+}
+
+.check-input:checked + .check-box {
+    border: none;
+    background:  url('../../Assets/no-label.svg') no-repeat;
+}
+
+.check-input:focus + .check-box {
+    background-color: #F1FCFF;
+    box-shadow: .5px .5px rgba(66, 147, 245, 1.0),
+                -.5px -.5px rgba(66, 147, 245, 1.0);
+    border-radius: 3px;
+}
+
+.button {
+    display: flex;
+    width: 319px;
+    height: auto;
+    padding: 8px 16px;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    border-radius: 4px;
+    background: #1890FF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; 
+    color: #FFF;
+    text-align: center;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.question-wrapper {
+    margin-top: 8px;
+}
+
+.question {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8C8C8C;
+    text-align: center;
+}
+
+.link {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #1890FF;
+}

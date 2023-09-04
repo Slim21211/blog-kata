@@ -20,10 +20,8 @@ export const fetchArticles = (offset) => {
   return async (dispatch) => {
     dispatch(fetchArticlesRequest());
     try {
-      const response = await fetch(`https://blog.kata.academy/api/articles?offset=${offset}`);
+      const response = await fetch(`https://blog.kata.academy/api/articles?limit=5&offset=${offset}`);
       const data = await response.json();
-      // const articles = data.articles;
-      // const articlesCount = data.articlesCount;
       dispatch(fetchArticlesSuccess(data));
     } catch (error) {
       dispatch(fetchArticlesFailure(error));

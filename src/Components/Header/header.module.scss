@@ -14,6 +14,11 @@
     color: rgba(0, 0, 0, 0.85);
 }
 
+.login-wrapper {
+    display: flex;
+    align-items: center;
+}
+
 .signIn-button {
     width: 84px;
     height: 35px;
@@ -29,6 +34,10 @@
 
 .signIn-button:hover {
     cursor: pointer;
+}
+
+.signIn-button-log {
+    display: none;
 }
 
 .signUp-button {
@@ -48,22 +57,77 @@
     cursor: pointer;
 }
 
+.signUp-button-log {
+    display: none;
+}
+
 .create-button {
     display: none;
 }
 
+.create-button-log {
+    width: 112.231px;
+    height: 31.098px;
+    margin-right: 30px;
+    border-radius: 5px;
+    border: 1px solid var(--success-color, #52C41A);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    color: var(--success-color, #52C41A);
+    background-color: #fff;
+}
+
 .user-wrapper {
-    display: none;
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.user-wrapper:hover {
+    cursor: pointer;
 }
 
 .user-name {
     display: none;
 }
 
+.user-name-log {
+    margin-right: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--heading-color, rgba(0, 0, 0, 0.85));
+}
+
 .user-image {
     display: none;
 }
 
+.user-image-log {
+    width: 46px;
+    height: 46px;
+    background: #fff;
+}
+
 .logout-button {
     display: none;
+}
+
+.logout-button-log {
+    width: 109px;
+    height: 51px;
+    border-radius: 5px;
+    border: 1px solid var(--text-color, rgba(0, 0, 0, 0.75));
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--text-color, rgba(0, 0, 0, 0.75));
+    background-color: #fff;
 }

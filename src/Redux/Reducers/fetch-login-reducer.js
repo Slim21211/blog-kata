@@ -3,6 +3,7 @@ const initialState = {
   user: null,
   token: '',
   isLoading: false,
+  isLoged: false,
   error: null,
 };
 
@@ -14,11 +15,13 @@ export const loginReducer = (state = initialState, action) => {
         isLoading: true,
       };
     case LOGIN_SUCCESS:
+      console.log('fff', action.payload);
       return {
         ...state,
         isLoading: false,
         user: action.payload,
-        token: action.payload.token,
+        token: action.payload.user.token,
+        isLoged: true,
       };
     case LOGIN_FAILURE:
       return {

@@ -27,7 +27,7 @@ const PostsList = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchArticles((pageNumber - 1) * 20));
+    dispatch(fetchArticles((pageNumber - 1) * 5));
   }, [dispatch, pageNumber]);
 
   if (isLoading) {
@@ -57,7 +57,7 @@ const PostsList = () => {
       <Pagination
         defaultCurrent={currentPage}
         current={parseInt(pageNumber, 10)}
-        total={Math.ceil((articlesCount / 20) * 10)}
+        total={Math.ceil((articlesCount / 20) * 40)}
         showSizeChanger={false}
         style={{ marginTop: '20px', textAlign: 'center' }}
         onChange={changePage}

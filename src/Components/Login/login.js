@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useForm } from 'react-hook-form';
 
@@ -23,9 +23,6 @@ const Login = () => {
     link,
   } = styles;
 
-  const user = useSelector((state) => state.loginReducer.user);
-  const token = useSelector((state) => state.loginReducer.token);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -36,11 +33,8 @@ const Login = () => {
   } = useForm({ mode: 'onBlur' });
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(loginUser(data));
     history.push('/page/1');
-    console.log(user);
-    console.log(token);
   };
 
   return (
