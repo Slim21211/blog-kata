@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../Actions/fetch-login-action';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOG_OUT } from '../Actions/fetch-login-action';
 const initialState = {
   user: null,
   token: '',
@@ -15,7 +15,6 @@ export const loginReducer = (state = initialState, action) => {
         isLoading: true,
       };
     case LOGIN_SUCCESS:
-      console.log('fff', action.payload);
       return {
         ...state,
         isLoading: false,
@@ -28,6 +27,11 @@ export const loginReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case LOG_OUT:
+      return {
+        ...state,
+        isLoged: false,
       };
     default:
       return state;

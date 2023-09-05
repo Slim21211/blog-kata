@@ -27,6 +27,7 @@ export const getUser = (token) => {
         },
       });
       const data = await response.json();
+      console.log('response', data);
       dispatch(fetchGetUserSuccess(data));
     } catch (error) {
       dispatch(fetchGetUserFailure(error));

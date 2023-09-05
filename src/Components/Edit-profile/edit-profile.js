@@ -1,16 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { editUser } from '../../Redux/Actions/fetch-edit-user-action';
 
 import styles from './edit-prifile.module.scss';
 
 const EditProfile = () => {
   const { wrapper, form, title, label, input, 'input-wrong': inputWrong, 'input-descr': inputDescr, button } = styles;
 
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.getUserReducer.user);
+  const token = useSelector((state) => state.loginReducer.token);
 
   const {
     register,
@@ -18,11 +21,16 @@ const EditProfile = () => {
     formState: { errors },
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { username: user.user?.username || '', email: user.user?.email || '', url: user.user?.url || '' },
+    defaultValues: {
+      username: user.user?.username || '',
+      email: user.user?.email || '',
+      image: user.user?.image || '',
+    },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log('put', data, token);
+    dispatch(editUser(data, token));
     history.push('/page/1');
   };
 
@@ -68,7 +76,6 @@ const EditProfile = () => {
             name="password"
             placeholder="New password"
             {...register('password', {
-              required: 'Password is required',
               minLength: { value: 6, message: 'Password must be at least 6 characters' },
               maxLength: { value: 40, message: 'Username can not exceed 40 characters' },
             })}
@@ -80,10 +87,9 @@ const EditProfile = () => {
           <input
             className={errors.avatar ? inputWrong : input}
             type="url"
-            name="avatar"
+            name="image"
             placeholder="Avatar image"
-            {...register('avatar', {
-              required: 'Avatar is required',
+            {...register('image', {
               pattern: {
                 value: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/,
                 message: 'Invalid URL',

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getUser } from '../../Redux/Actions/fetch-get-user-action';
+import { LOG_OUT } from '../../Redux/Actions/fetch-login-action';
 import noAvatar from '../../Assets//Noavatar.png';
 
 import styles from './header.module.scss';
@@ -31,12 +32,14 @@ const Header = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const isLoged = useSelector((state) => state.loginReducer.isLoged);
-  const token = useSelector((state) => state.loginReducer.token);
+  const loginToken = useSelector((state) => state.loginReducer.token);
+  const userToken = useSelector((state) => state.getUserReducer.token);
   const user = useSelector((state) => state.getUserReducer.user);
+  const actualToken = userToken ? userToken : loginToken;
 
   useEffect(() => {
-    dispatch(getUser(token));
-  }, [dispatch, token]);
+    dispatch(getUser(actualToken));
+  }, [dispatch, actualToken]);
 
   const onSignUp = () => {
     history.push('/registration');
@@ -48,6 +51,10 @@ const Header = () => {
 
   const onEditProfile = () => {
     history.push('/edit');
+  };
+
+  const logOut = () => {
+    dispatch({ type: LOG_OUT });
   };
 
   return (
@@ -71,7 +78,9 @@ const Header = () => {
             alt="avatar"
           ></img>
         </div>
-        <button className={isLoged ? logOutButtonLog : logOutButton}>Log Out</button>
+        <button className={isLoged ? logOutButtonLog : logOutButton} onClick={logOut}>
+          Log Out
+        </button>
       </div>
     </div>
   );

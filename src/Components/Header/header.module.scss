@@ -131,3 +131,7 @@
     color: var(--text-color, rgba(0, 0, 0, 0.75));
     background-color: #fff;
 }
+
+.logout-button-log:hover {
+    cursor: pointer;
+}
