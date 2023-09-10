@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUser } from '../../Redux/Actions/fetch-get-user-action';
-import { LOG_OUT } from '../../Redux/Actions/fetch-login-action';
 import noAvatar from '../../Assets//Noavatar.png';
+import { LOG_OUT, getUser } from '../../Redux/Actions/fetch-get-user-action';
 
 import styles from './header.module.scss';
 
@@ -31,15 +30,16 @@ const Header = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const isLoged = useSelector((state) => state.loginReducer.isLoged);
-  const loginToken = useSelector((state) => state.loginReducer.token);
-  const userToken = useSelector((state) => state.getUserReducer.token);
+  const isLoged = localStorage.getItem('token');
   const user = useSelector((state) => state.getUserReducer.user);
-  const actualToken = userToken ? userToken : loginToken;
+  const loginToken = useSelector((state) => state.loginReducer.loginToken);
+  const actualToken = localStorage.getItem('token') ? localStorage.getItem('token') : loginToken;
 
   useEffect(() => {
-    dispatch(getUser(actualToken));
-  }, [dispatch, actualToken]);
+    if (actualToken) {
+      dispatch(getUser(actualToken));
+    }
+  }, [dispatch, loginToken]);
 
   const onSignUp = () => {
     history.push('/registration');
@@ -54,7 +54,12 @@ const Header = () => {
   };
 
   const logOut = () => {
+    localStorage.clear();
     dispatch({ type: LOG_OUT });
+  };
+
+  const onCreate = () => {
+    history.push('/new-article');
   };
 
   return (
@@ -69,7 +74,9 @@ const Header = () => {
         <button className={isLoged ? signUpButtonLog : signUpButton} onClick={onSignUp}>
           Sign Up
         </button>
-        <button className={isLoged ? createButtonLog : createButton}>Create article</button>
+        <button className={isLoged ? createButtonLog : createButton} onClick={onCreate}>
+          Create article
+        </button>
         <div className={userWrapper} onClick={onEditProfile}>
           <div className={isLoged ? userNameLog : userName}>{user.user ? user.user.username : null}</div>
           <img

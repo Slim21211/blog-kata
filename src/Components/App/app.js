@@ -9,6 +9,7 @@ import Article from '../Article/article';
 import Registration from '../Registration/registration';
 import Login from '../Login/login';
 import EditProfile from '../Edit-profile/edit-profile';
+import CreateArticle from '../Create-article/create-article';
 
 import styles from './app.module.scss';
 
@@ -19,7 +20,7 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(fetchArticles(0));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>
@@ -31,6 +32,7 @@ export const App = () => {
         <Route path="/edit" component={EditProfile} />
         <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />
+        <Route path="/new-article" component={CreateArticle} />
       </div>
     </Router>
   );

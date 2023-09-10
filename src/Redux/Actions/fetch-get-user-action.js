@@ -1,6 +1,7 @@
 export const FETCH_GET_USER_REQUEST = 'FETCH_GET_USER_REQUEST';
 export const FETCH_GET_USER_SUCCESS = 'FETCH_GET_USER_SUCCESS';
 export const FETCH_GET_USER_FAILURE = 'FETCH_GET_USER_FAILURE';
+export const LOG_OUT = 'LOG_OUT';
 
 export const fetchGetUserRequest = () => ({
   type: FETCH_GET_USER_REQUEST,
@@ -14,6 +15,10 @@ export const fetchGetUserSuccess = (user) => ({
 export const fetchGetUserFailure = (error) => ({
   type: FETCH_GET_USER_FAILURE,
   payload: error,
+});
+
+export const logOut = () => ({
+  type: LOG_OUT,
 });
 
 export const getUser = (token) => {

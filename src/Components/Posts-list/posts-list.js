@@ -36,34 +36,38 @@ const PostsList = () => {
   if (error !== null) {
     return <div>ERROR</div>;
   }
-  return (
-    <div className={postsListWrapper}>
-      {articles.map((item) => {
-        const { title, tagList, author, updatedAt, body, favoritesCount, slug } = item;
-        return (
-          <Link to={`/article/${slug}`} key={item.slug}>
-            <Post
-              title={title}
-              tagList={tagList}
-              user={author.username}
-              date={updatedAt}
-              description={body}
-              avatar={author.image}
-              likes={favoritesCount}
-            />
-          </Link>
-        );
-      })}
-      <Pagination
-        defaultCurrent={currentPage}
-        current={parseInt(pageNumber, 10)}
-        total={Math.ceil((articlesCount / 20) * 40)}
-        showSizeChanger={false}
-        style={{ marginTop: '20px', textAlign: 'center' }}
-        onChange={changePage}
-      />
-    </div>
-  );
+  if (articles) {
+    return (
+      <div className={postsListWrapper}>
+        {articles.map((item) => {
+          const { title, tagList, author, updatedAt, body, favoritesCount, slug } = item;
+          return (
+            <Link to={`/article/${slug}`} key={item.slug}>
+              <Post
+                title={title}
+                tagList={tagList}
+                user={author.username}
+                date={updatedAt}
+                description={body}
+                avatar={author.image}
+                likes={favoritesCount}
+              />
+            </Link>
+          );
+        })}
+        <Pagination
+          defaultCurrent={currentPage}
+          current={parseInt(pageNumber, 10)}
+          total={Math.ceil((articlesCount / 20) * 40)}
+          showSizeChanger={false}
+          style={{ marginTop: '20px', textAlign: 'center' }}
+          onChange={changePage}
+        />
+      </div>
+    );
+  } else {
+    dispatch(fetchArticles((pageNumber - 1) * 5));
+  }
 };
 
 export default PostsList;

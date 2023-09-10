@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { editUser } from '../../Redux/Actions/fetch-edit-user-action';
 
-import styles from './edit-prifile.module.scss';
+import styles from './edit-profile.module.scss';
 
 const EditProfile = () => {
   const { wrapper, form, title, label, input, 'input-wrong': inputWrong, 'input-descr': inputDescr, button } = styles;
@@ -13,7 +13,6 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.getUserReducer.user);
-  const token = useSelector((state) => state.loginReducer.token);
 
   const {
     register,
@@ -29,7 +28,7 @@ const EditProfile = () => {
   });
 
   const onSubmit = (data) => {
-    console.log('put', data, token);
+    const token = localStorage.getItem('token');
     dispatch(editUser(data, token));
     history.push('/page/1');
   };
