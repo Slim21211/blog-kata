@@ -10,6 +10,7 @@ import Registration from '../Registration/registration';
 import Login from '../Login/login';
 import EditProfile from '../Edit-profile/edit-profile';
 import CreateArticle from '../Create-article/create-article';
+import EditArticle from '../Edit-article/edit-article';
 
 import styles from './app.module.scss';
 
@@ -33,6 +34,7 @@ export const App = () => {
         <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />
         <Route path="/new-article" component={CreateArticle} />
+        <Route path="/articles/:slug/edit" component={EditArticle} />
       </div>
     </Router>
   );

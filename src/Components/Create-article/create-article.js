@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { createArticle } from '../../Redux/Actions/fetch-create-article-action';
+import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
+import { editArticle } from '../../Redux/Actions/fetch-edit-article-action';
 
 import styles from './create-article.module.scss';
 
-const CreateArticle = () => {
+const CreateArticle = ({ isEditing, articleData, slug }) => {
   const {
     wrapper,
     header,
@@ -25,41 +27,70 @@ const CreateArticle = () => {
     button,
   } = styles;
 
-  const [tags, setTags] = useState([]);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    body: '',
+    tags: [],
+  });
   const [tagValue, setTagValue] = useState('');
+
+  useEffect(() => {
+    if (isEditing) {
+      setFormData({
+        title: articleData.title,
+        description: articleData.description,
+        body: articleData.body,
+        tags: articleData.tags,
+      });
+      setValue('title', articleData.title);
+      setValue('description', articleData.description);
+      setValue('body', articleData.body);
+    }
+  }, [isEditing, articleData]);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const addTag = (event) => {
     event.preventDefault();
-    setTags([...tags, tagValue]);
+    setFormData({ tags: [...formData.tags, tagValue] });
     setTagValue('');
   };
 
   const deleteTag = (index) => {
-    const updatedTags = [...tags];
+    const updatedTags = [...formData.tags];
     updatedTags.splice(index, 1);
-    setTags(updatedTags);
+    setFormData({ ...formData, tags: updatedTags });
   };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+    setValue,
+  } = useForm({
+    mode: 'onBlur',
+  });
 
   const onSubmit = (data) => {
-    data.tagList = tags;
-    console.log(data);
     const token = localStorage.getItem('token');
-    dispatch(createArticle(data, token));
-    history.push('/page/1');
+    if (!isEditing) {
+      data.tagList = formData.tags;
+
+      dispatch(createArticle(data, token));
+      dispatch(fetchArticles(0));
+      history.push('/page/1');
+    } else {
+      dispatch(editArticle(data, slug, token));
+      dispatch(fetchArticles(0));
+      history.push('/page/1');
+    }
   };
 
   return (
     <div className={wrapper}>
-      <h2 className={header}>Create new article</h2>
+      <h2 className={header}>{isEditing ? 'Edit article' : 'Create new article'} </h2>
       <form className={form} onSubmit={handleSubmit(onSubmit)}>
         <label className={label}>
           <div>Title</div>
@@ -103,7 +134,7 @@ const CreateArticle = () => {
         {errors.body && <div className={inputDescr}>{errors.body.message}</div>}
         <div className={tagsWrapper}>
           <div className={tagsTitle}>Tags</div>
-          {tags.map((elem, index) => {
+          {formData.tags.map((elem, index) => {
             return (
               <div key={index} className={tagWrapper}>
                 <label className={label}>
@@ -113,9 +144,11 @@ const CreateArticle = () => {
                     placeholder="Tag"
                     value={elem}
                     onChange={(event) => {
-                      const updatedTags = [...tags];
-                      updatedTags[index] = event.target.value;
-                      setTags(updatedTags);
+                      console.log(event.target.value);
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        title: event.target.value,
+                      }));
                     }}
                   />
                 </label>

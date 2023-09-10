@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 
@@ -13,6 +13,7 @@ const Article = () => {
   const {
     'article-wrapper': articleWrapper,
     'article-header-wrapper': articleHeaderWrapper,
+    'article-description-wrapper': articleDescriptionWrapper,
     'article-description': articleDescription,
     'article-title-wrapper': articleTitleWrapper,
     'article-user-wrapper': posrUserWrapper,
@@ -27,6 +28,9 @@ const Article = () => {
     'article-date': articleDate,
     'article-user-image': articleUserImage,
     'tags-wrapper': tagsWrapper,
+    'delete-btn': deleteBtn,
+    'edit-btn': editBtn,
+    'edit-btn-wrapper': editBtnWrapper,
   } = styles;
   const { slug } = useParams();
 
@@ -34,7 +38,6 @@ const Article = () => {
   const article = useSelector((state) => state.oneArticleReducer.article);
   const isLoading = useSelector((state) => state.oneArticleReducer.isLoading);
   const loaded = useSelector((state) => state.oneArticleReducer.loaded);
-  console.log(article);
 
   useEffect(() => {
     dispatch(fetchOneArticle(slug));
@@ -74,7 +77,19 @@ const Article = () => {
             <img src={author.image ? author.image : noAvatar} alt="avatar" className={articleUserImage}></img>
           </div>
         </div>
-        <div className={articleDescription}>{description}</div>
+        <div className={articleDescriptionWrapper}>
+          <div className={articleDescription}>{description}</div>
+          <button className={deleteBtn} onClick={() => console.log('delete')}>
+            Delete
+          </button>
+          <div className={editBtnWrapper}>
+            <Link style={{ height: 31.098 }} to={`/articles/${slug}/edit`}>
+              <button className={editBtn} onClick={() => console.log('edit')}>
+                Edit
+              </button>
+            </Link>
+          </div>
+        </div>
         <div className={articleDescription}>
           <ReactMarkdown>{body}</ReactMarkdown>
         </div>
