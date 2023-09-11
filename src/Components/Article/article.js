@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 
+import Modal from '../Modal/modal';
 import { fetchOneArticle } from '../../Redux/Actions/fetch-one-article-action';
+import { fetchDeleteArticle } from '../../Redux/Actions/fetch-delete-article-action';
+import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 import noAvatar from '../../Assets/Noavatar.png';
 
 import styles from './article.module.scss';
@@ -35,13 +38,31 @@ const Article = () => {
   const { slug } = useParams();
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const article = useSelector((state) => state.oneArticleReducer.article);
   const isLoading = useSelector((state) => state.oneArticleReducer.isLoading);
   const loaded = useSelector((state) => state.oneArticleReducer.loaded);
+  const token = localStorage.getItem('token');
+  const authorUsername = useSelector((state) => state.oneArticleReducer.authorUsername);
+  const userName = useSelector((state) => state.getUserReducer.userName);
+  const isCurrentUserArticle = authorUsername === userName;
+  const [shouldDelete, setShouldDelete] = useState(false);
+  console.log(isCurrentUserArticle);
 
   useEffect(() => {
     dispatch(fetchOneArticle(slug));
   }, [dispatch, slug]);
+
+  const approveDelete = () => {
+    dispatch(fetchDeleteArticle(slug, token));
+    setShouldDelete(false);
+    dispatch(fetchArticles(0));
+    history.push('/page/1');
+  };
+
+  const cancelModal = () => {
+    setShouldDelete(false);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -79,16 +100,19 @@ const Article = () => {
         </div>
         <div className={articleDescriptionWrapper}>
           <div className={articleDescription}>{description}</div>
-          <button className={deleteBtn} onClick={() => console.log('delete')}>
-            Delete
-          </button>
-          <div className={editBtnWrapper}>
-            <Link style={{ height: 31.098 }} to={`/articles/${slug}/edit`}>
-              <button className={editBtn} onClick={() => console.log('edit')}>
-                Edit
+          {isCurrentUserArticle && (
+            <>
+              <button className={deleteBtn} onClick={() => setShouldDelete(true)}>
+                Delete
               </button>
-            </Link>
-          </div>
+              {shouldDelete && <Modal onApprove={approveDelete} onCancel={cancelModal} />}
+              <div className={editBtnWrapper}>
+                <Link style={{ height: 31.098 }} to={`/articles/${slug}/edit`}>
+                  <button className={editBtn}>Edit</button>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
         <div className={articleDescription}>
           <ReactMarkdown>{body}</ReactMarkdown>

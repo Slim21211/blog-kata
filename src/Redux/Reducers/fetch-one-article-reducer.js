@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   article: {},
+  authorUsername: '',
   isLoading: false,
   loaded: false,
   error: null,
@@ -21,6 +22,7 @@ export const oneArticleReducer = (state = initialState, action) => {
         isLoading: false,
         loaded: true,
         article: action.payload,
+        authorUsername: action.payload.article.author.username,
       };
     case FETCH_ONE_ARTICLE_FAILURE:
       return { ...state, isLoading: false, error: action.payload };

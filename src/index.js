@@ -10,6 +10,7 @@ import { registrationReducer } from './Redux/Reducers/fetch-registration-reducer
 import { loginReducer } from './Redux/Reducers/fetch-login-reducer';
 import { getUserReducer } from './Redux/Reducers/fetch-get-user-reducer';
 import { createArticleReducer } from './Redux/Reducers/fetch-create-article-reducer';
+import { deleteArticleReducer } from './Redux/Reducers/fetch-delete-article-reducer';
 import { App } from './Components/App/app';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   loginReducer,
   getUserReducer,
   createArticleReducer,
+  deleteArticleReducer,
 });
 
 const loggerMiddleware = (store) => (next) => (action) => {

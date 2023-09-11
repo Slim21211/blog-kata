@@ -8,6 +8,7 @@ import { EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILURE } from '../Acti
 
 const initialState = {
   user: {},
+  userName: '',
   isLoading: false,
   error: null,
 };
@@ -24,6 +25,7 @@ export const getUserReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         user: action.payload,
+        userName: action.payload.user.username,
       };
     case FETCH_GET_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
@@ -42,6 +44,7 @@ export const getUserReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         user: action.payload,
+        userName: action.payload.user.username,
       };
     case EDIT_USER_FAILURE:
       return {
