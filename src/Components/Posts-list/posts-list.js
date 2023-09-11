@@ -73,7 +73,11 @@ const PostsList = () => {
       </div>
     );
   } else {
-    dispatch(fetchArticles((pageNumber - 1) * 5));
+    if (token === null) {
+      dispatch(fetchArticles((pageNumber - 1) * 5));
+    } else {
+      dispatch(fetchArticlesAuth((pageNumber - 1) * 5, token));
+    }
   }
 };
 

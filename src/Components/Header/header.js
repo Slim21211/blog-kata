@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import noAvatar from '../../Assets//Noavatar.png';
 import { LOG_OUT, getUser } from '../../Redux/Actions/fetch-get-user-action';
+import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 
 import styles from './header.module.scss';
 
@@ -56,6 +57,7 @@ const Header = () => {
   const logOut = () => {
     localStorage.clear();
     dispatch({ type: LOG_OUT });
+    dispatch(fetchArticles(0));
   };
 
   const onCreate = () => {

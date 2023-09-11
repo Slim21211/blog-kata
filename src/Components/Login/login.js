@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { loginUser } from '../../Redux/Actions/fetch-login-action';
+import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 
 import styles from './login.module.scss';
 
@@ -22,6 +23,8 @@ const Login = () => {
     link,
   } = styles;
 
+  const token = localStorage.getItem('token');
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -31,8 +34,9 @@ const Login = () => {
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = (data) => {
-    dispatch(loginUser(data));
+  const onSubmit = async (data) => {
+    await dispatch(loginUser(data));
+    await dispatch(fetchArticlesAuth(0, token));
     history.push('/page/1');
   };
 
