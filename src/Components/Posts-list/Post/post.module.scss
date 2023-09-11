@@ -53,6 +53,17 @@
     cursor: pointer;
 }
 
+.post-like-image-favorited {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    background: no-repeat url('../../../Assets/Heart_corazón\ 1.svg');
+}
+
+.post-like-image-favorited:hover {
+    cursor: pointer;
+}
+
 .post-like-count {
     font-family: 'Inter', sans-serif;
     font-size: 12px;

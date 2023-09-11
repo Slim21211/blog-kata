@@ -5,9 +5,11 @@ import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 
 import Modal from '../Modal/modal';
-import { fetchOneArticle } from '../../Redux/Actions/fetch-one-article-action';
+import { fetchOneArticle, fetchOneArticleAuth } from '../../Redux/Actions/fetch-one-article-action';
+import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { fetchDeleteArticle } from '../../Redux/Actions/fetch-delete-article-action';
-import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
+import { fetchFavoriteArticle } from '../../Redux/Actions/fetch-favorite-article-action';
+import { fetchUnfavoriteArticle } from '../../Redux/Actions/fetch-unfavorite-article-action';
 import noAvatar from '../../Assets/Noavatar.png';
 
 import styles from './article.module.scss';
@@ -24,6 +26,7 @@ const Article = () => {
     'article-title-line': articleTitleLine,
     'article-title': articleTitle,
     'article-like-image': articleLikeImage,
+    'article-like-image-favorited': articleLikeImageFavorited,
     'article-like-count': articleLikeCount,
     'article-tags': articleTags,
     'article-user-info': articleUserInfo,
@@ -40,6 +43,7 @@ const Article = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const article = useSelector((state) => state.oneArticleReducer.article);
+  const isFavorited = useSelector((state) => state.oneArticleReducer.article.article.favorited);
   const isLoading = useSelector((state) => state.oneArticleReducer.isLoading);
   const loaded = useSelector((state) => state.oneArticleReducer.loaded);
   const token = localStorage.getItem('token');
@@ -47,16 +51,29 @@ const Article = () => {
   const userName = useSelector((state) => state.getUserReducer.userName);
   const isCurrentUserArticle = authorUsername === userName;
   const [shouldDelete, setShouldDelete] = useState(false);
-  console.log(isCurrentUserArticle);
 
   useEffect(() => {
-    dispatch(fetchOneArticle(slug));
+    if (token === null) {
+      dispatch(fetchOneArticle(slug));
+    } else {
+      dispatch(fetchOneArticleAuth(slug, token));
+    }
   }, [dispatch, slug]);
+
+  const handleFavorite = async () => {
+    await dispatch(fetchFavoriteArticle(slug, token));
+    await dispatch(fetchOneArticleAuth(slug, token));
+  };
+
+  const handleUnFavorite = async () => {
+    await dispatch(fetchUnfavoriteArticle(slug, token));
+    await dispatch(fetchOneArticleAuth(slug, token));
+  };
 
   const approveDelete = () => {
     dispatch(fetchDeleteArticle(slug, token));
     setShouldDelete(false);
-    dispatch(fetchArticles(0));
+    dispatch(fetchArticlesAuth(0));
     history.push('/page/1');
   };
 
@@ -84,7 +101,10 @@ const Article = () => {
             <div className={articleTitleContainer}>
               <div className={articleTitleLine}>
                 <div className={articleTitle}>{title}</div>
-                <div className={articleLikeImage}></div>
+                <div
+                  className={!isFavorited ? articleLikeImage : articleLikeImageFavorited}
+                  onClick={isFavorited ? handleUnFavorite : handleFavorite}
+                ></div>
                 <span className={articleLikeCount}>{favoritesCount}</span>
               </div>
               <div className={tagsWrapper}>{tag}</div>

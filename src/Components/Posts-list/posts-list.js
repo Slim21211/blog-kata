@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
-import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
+import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 
 import Post from './Post/post';
 import styles from './post-list.module.scss';
@@ -15,6 +15,7 @@ const PostsList = () => {
   const articlesCount = useSelector((state) => state.articleReducer.articlesCount);
   const isLoading = useSelector((state) => state.articleReducer.isLoading);
   const error = useSelector((state) => state.articleReducer.error);
+  const token = localStorage.getItem('token');
   const [currentPage, setCurrentPage] = useState(1);
 
   const { pageNumber } = useParams();
@@ -27,7 +28,11 @@ const PostsList = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchArticles((pageNumber - 1) * 5));
+    if (token === null) {
+      dispatch(fetchArticles((pageNumber - 1) * 5));
+    } else {
+      dispatch(fetchArticlesAuth((pageNumber - 1) * 5, token));
+    }
   }, [dispatch, pageNumber]);
 
   if (isLoading) {
@@ -40,19 +45,21 @@ const PostsList = () => {
     return (
       <div className={postsListWrapper}>
         {articles.map((item) => {
-          const { title, tagList, author, updatedAt, body, favoritesCount, slug } = item;
+          const { title, tagList, author, updatedAt, body, favoritesCount, slug, favorited } = item;
           return (
-            <Link to={`/article/${slug}`} key={item.slug}>
-              <Post
-                title={title}
-                tagList={tagList}
-                user={author.username}
-                date={updatedAt}
-                description={body}
-                avatar={author.image}
-                likes={favoritesCount}
-              />
-            </Link>
+            <Post
+              title={title}
+              tagList={tagList}
+              user={author.username}
+              date={updatedAt}
+              description={body}
+              avatar={author.image}
+              likes={favoritesCount}
+              favorited={favorited}
+              slug={slug}
+              key={slug}
+              offset={(pageNumber - 1) * 5}
+            />
           );
         })}
         <Pagination

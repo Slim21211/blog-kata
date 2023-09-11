@@ -28,3 +28,22 @@ export const fetchOneArticle = (slug) => {
     }
   };
 };
+
+export const fetchOneArticleAuth = (slug, token) => {
+  return async (dispatch) => {
+    dispatch(fetchOneArticleRequest());
+    try {
+      const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+      });
+      const data = await response.json();
+      dispatch(fetchOneArticleSuccess(data));
+    } catch (error) {
+      dispatch(fetchOneArticleFailure(error));
+    }
+  };
+};

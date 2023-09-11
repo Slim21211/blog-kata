@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { createArticle } from '../../Redux/Actions/fetch-create-article-action';
-import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
+import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { editArticle } from '../../Redux/Actions/fetch-edit-article-action';
 
 import styles from './create-article.module.scss';
@@ -79,11 +79,11 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
       data.tagList = formData.tags;
 
       dispatch(createArticle(data, token));
-      dispatch(fetchArticles(0));
+      dispatch(fetchArticlesAuth(0));
       history.push('/page/1');
     } else {
       dispatch(editArticle(data, slug, token));
-      dispatch(fetchArticles(0));
+      dispatch(fetchArticlesAuth(0));
       history.push('/page/1');
     }
   };

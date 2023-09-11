@@ -2,7 +2,7 @@ import { React, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
+import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
 import PostsList from '../Posts-list/posts-list';
 import Article from '../Article/article';
@@ -17,10 +17,16 @@ import styles from './app.module.scss';
 export const App = () => {
   const { 'main-wrapper': mainWrapper } = styles;
 
+  const token = localStorage.getItem('token');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchArticles(0));
+    if (token === null) {
+      dispatch(fetchArticles(0));
+    } else {
+      dispatch(fetchArticlesAuth(0, token));
+    }
   }, [dispatch]);
 
   return (
