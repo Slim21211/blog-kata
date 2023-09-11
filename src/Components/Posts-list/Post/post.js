@@ -43,13 +43,17 @@ const Post = ({ title, tagList, user, date, description, avatar, likes, slug, fa
   });
 
   const handleFavorite = async () => {
-    await dispatch(fetchFavoriteArticle(slug, token));
-    await dispatch(fetchArticlesAuth(offset, token));
+    if (token !== null) {
+      await dispatch(fetchFavoriteArticle(slug, token));
+      await dispatch(fetchArticlesAuth(offset, token));
+    }
   };
 
   const handleUnFavorite = async () => {
-    await dispatch(fetchUnfavoriteArticle(slug, token));
-    await dispatch(fetchArticlesAuth(offset, token));
+    if (token !== null) {
+      await dispatch(fetchUnfavoriteArticle(slug, token));
+      await dispatch(fetchArticlesAuth(offset, token));
+    }
   };
 
   const formattedDate = format(new Date(date), 'MMMM d, yyyy');

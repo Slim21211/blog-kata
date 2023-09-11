@@ -43,7 +43,7 @@ const Article = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const article = useSelector((state) => state.oneArticleReducer.article);
-  const isFavorited = useSelector((state) => state.oneArticleReducer.article.article.favorited);
+  const isFavorited = useSelector((state) => state.oneArticleReducer.article.article);
   const isLoading = useSelector((state) => state.oneArticleReducer.isLoading);
   const loaded = useSelector((state) => state.oneArticleReducer.loaded);
   const token = localStorage.getItem('token');
@@ -58,16 +58,20 @@ const Article = () => {
     } else {
       dispatch(fetchOneArticleAuth(slug, token));
     }
-  }, [dispatch, slug]);
+  }, [dispatch, slug, token]);
 
   const handleFavorite = async () => {
-    await dispatch(fetchFavoriteArticle(slug, token));
-    await dispatch(fetchOneArticleAuth(slug, token));
+    if (token !== null) {
+      await dispatch(fetchFavoriteArticle(slug, token));
+      await dispatch(fetchOneArticleAuth(slug, token));
+    }
   };
 
   const handleUnFavorite = async () => {
-    await dispatch(fetchUnfavoriteArticle(slug, token));
-    await dispatch(fetchOneArticleAuth(slug, token));
+    if (token !== null) {
+      await dispatch(fetchUnfavoriteArticle(slug, token));
+      await dispatch(fetchOneArticleAuth(slug, token));
+    }
   };
 
   const approveDelete = () => {
@@ -102,8 +106,8 @@ const Article = () => {
               <div className={articleTitleLine}>
                 <div className={articleTitle}>{title}</div>
                 <div
-                  className={!isFavorited ? articleLikeImage : articleLikeImageFavorited}
-                  onClick={isFavorited ? handleUnFavorite : handleFavorite}
+                  className={!isFavorited.favorited ? articleLikeImage : articleLikeImageFavorited}
+                  onClick={isFavorited.favorited ? handleUnFavorite : handleFavorite}
                 ></div>
                 <span className={articleLikeCount}>{favoritesCount}</span>
               </div>
