@@ -35,6 +35,7 @@ export const getUserReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        error: null,
       };
     case EDIT_USER_SUCCESS:
       if (localStorage.getItem('token') === null) {
@@ -45,6 +46,7 @@ export const getUserReducer = (state = initialState, action) => {
         isLoading: false,
         user: action.payload,
         userName: action.payload.user.username,
+        error: 'no error',
       };
     case EDIT_USER_FAILURE:
       return {

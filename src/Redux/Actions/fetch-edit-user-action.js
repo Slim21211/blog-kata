@@ -30,8 +30,10 @@ export const editUser = (userData, token) => {
           user: userData,
         }),
       });
-      if (!response.ok) {
-        throw new Error('Edit user failed');
+      if (response.status === 422) {
+        const errorResponse = await response.json();
+        const errorMessage = errorResponse.errors;
+        dispatch(editUserFailure(errorMessage));
       } else {
         const user = await response.json();
         dispatch(editUserSuccess(user));

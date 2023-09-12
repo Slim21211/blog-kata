@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,11 +13,13 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.getUserReducer.user);
+  const error = useSelector((state) => state.getUserReducer.error);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -30,8 +32,20 @@ const EditProfile = () => {
   const onSubmit = (data) => {
     const token = localStorage.getItem('token');
     dispatch(editUser(data, token));
-    history.push('/page/1');
   };
+
+  useEffect(() => {
+    if (error?.username && error?.email) {
+      setError('username', { type: 'manual', message: 'This username is already taken or invalid' });
+      setError('email', { type: 'manual', message: 'This email is alredy taken' });
+    } else if (error?.username) {
+      setError('username', { type: 'manual', message: 'This username is already taken' });
+    } else if (error?.email) {
+      setError('email', { type: 'manual', message: 'This email is alredy taken' });
+    } else if (error === 'no error') {
+      history.push('/page/1');
+    }
+  }, [error, history]);
 
   return (
     <div className={wrapper}>
@@ -75,6 +89,7 @@ const EditProfile = () => {
             name="password"
             placeholder="New password"
             {...register('password', {
+              required: 'Password is required',
               minLength: { value: 6, message: 'Password must be at least 6 characters' },
               maxLength: { value: 40, message: 'Username can not exceed 40 characters' },
             })}
