@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { registrationUser } from '../../Redux/Actions/fetch-registration-action';
@@ -30,20 +30,32 @@ const Registration = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const error = useSelector((state) => state.registrationReducer.error);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
     watch,
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(registrationUser(data));
-    dispatch(registrationUser(data));
-    history.push('/login');
+  const onSubmit = async (data) => {
+    await dispatch(registrationUser(data));
   };
+
+  useEffect(() => {
+    if (error?.username && error?.email) {
+      setError('username', { type: 'manual', message: 'This username is already taken or invalid' });
+      setError('email', { type: 'manual', message: 'This email is alredy taken' });
+    } else if (error?.username) {
+      setError('username', { type: 'manual', message: 'This username is already taken' });
+    } else if (error?.email) {
+      setError('email', { type: 'manual', message: 'This email is alredy taken' });
+    } else if (error === 'no error') {
+      history.push('/sign-in');
+    }
+  }, [error, history]);
 
   return (
     <div className={wrapper}>
@@ -64,7 +76,7 @@ const Registration = () => {
           ></input>
         </label>
         {errors.username && <div className={inputDescr}>{errors.username.message}</div>}
-
+        {/* {usernameError && <div className={inputDescr}>{errors.username.message}</div>} */}
         <label className={label}>
           <div>Email address</div>
           <input
@@ -79,6 +91,7 @@ const Registration = () => {
           ></input>
         </label>
         {errors.email && <div className={inputDescr}>{errors.email.message}</div>}
+        {/* {emailError && <div className={inputDescr}>{errors.email.message}</div>} */}
         <label className={label}>
           <div>Password</div>
           <input
@@ -130,7 +143,7 @@ const Registration = () => {
       </form>
       <div className={questionWrapper}>
         <span className={question}>Already have an account? </span>
-        <Link to="/login">
+        <Link to="/sign-in">
           <span className={link}>Sign In.</span>
         </Link>
       </div>

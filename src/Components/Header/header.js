@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch, useSelector } from 'react-redux';
 
 import noAvatar from '../../Assets//Noavatar.png';
-import { LOG_OUT, getUser } from '../../Redux/Actions/fetch-get-user-action';
+import { getUser, logOutUser } from '../../Redux/Actions/fetch-get-user-action';
+import { startRegistration } from '../../Redux/Actions/fetch-registration-action';
 import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
+import { logOutSession } from '../../Redux/Actions/fetch-login-action';
 
 import styles from './header.module.scss';
 
@@ -42,21 +44,23 @@ const Header = () => {
     }
   }, [dispatch, loginToken]);
 
-  const onSignUp = () => {
-    history.push('/registration');
+  const onSignUp = async () => {
+    dispatch(startRegistration());
+    history.push('/sign-up');
   };
 
   const onSignIn = () => {
-    history.push('/login');
+    history.push('/sign-in');
   };
 
   const onEditProfile = () => {
-    history.push('/edit');
+    history.push('/profile');
   };
 
   const logOut = () => {
     localStorage.clear();
-    dispatch({ type: LOG_OUT });
+    dispatch(logOutSession());
+    dispatch(logOutUser());
     dispatch(fetchArticles(0));
   };
 

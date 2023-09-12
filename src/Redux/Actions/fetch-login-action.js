@@ -1,7 +1,7 @@
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const LOG_OUT = 'LOG_OUT;';
+export const LOG_OUT_SESSION = 'LOG_OUT_SESSION;';
 
 export const loginRequest = () => ({
   type: LOGIN_REQUEST,
@@ -17,8 +17,8 @@ export const loginFailure = (error) => ({
   payload: error,
 });
 
-export const logOut = () => ({
-  type: LOG_OUT,
+export const logOutSession = () => ({
+  type: LOG_OUT_SESSION,
 });
 
 export const loginUser = (userData) => {
@@ -34,8 +34,10 @@ export const loginUser = (userData) => {
           user: userData,
         }),
       });
-      if (!response.ok) {
-        throw new Error('login failed');
+      if (response.status === 422) {
+        const errorResponse = await response.json();
+        const errorMessage = errorResponse.errors;
+        dispatch(loginFailure(errorMessage));
       } else {
         const user = await response.json();
         dispatch(loginSuccess(user));

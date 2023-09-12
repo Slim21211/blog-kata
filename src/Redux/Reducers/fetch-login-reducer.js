@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOG_OUT } from '../Actions/fetch-login-action';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOG_OUT_SESSION } from '../Actions/fetch-login-action';
 const initialState = {
   user: null,
   loginToken: '',
@@ -13,6 +13,7 @@ export const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        error: null,
       };
     case LOGIN_SUCCESS:
       return {
@@ -21,6 +22,7 @@ export const loginReducer = (state = initialState, action) => {
         user: action.payload,
         isLoged: true,
         loginToken: action.payload.user.token,
+        error: 'no error',
       };
     case LOGIN_FAILURE:
       return {
@@ -28,10 +30,11 @@ export const loginReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
-    case LOG_OUT:
+    case LOG_OUT_SESSION:
       return {
         ...state,
         isLoged: false,
+        error: null,
       };
     default:
       return state;

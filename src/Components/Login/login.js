@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { loginUser } from '../../Redux/Actions/fetch-login-action';
@@ -27,18 +27,27 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const error = useSelector((state) => state.loginReducer.error);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({ mode: 'onBlur' });
 
   const onSubmit = async (data) => {
     await dispatch(loginUser(data));
-    await dispatch(fetchArticlesAuth(0, token));
-    history.push('/page/1');
   };
+
+  useEffect(() => {
+    if (error?.errors) {
+      setError('password', { type: 'manual', message: 'Email or password is invalid' });
+    } else if (error === 'no error') {
+      dispatch(fetchArticlesAuth(0, token));
+      history.push('/page/1');
+    }
+  }, [error, history]);
 
   return (
     <div className={wrapper}>

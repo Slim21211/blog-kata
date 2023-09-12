@@ -34,9 +34,9 @@ export const App = () => {
       <div className={mainWrapper}>
         <Header />
         <Redirect from="/" to="/page/1" />
-        <Route path="/registration" component={Registration} />
-        <Route path="/login" component={Login} />
-        <Route path="/edit" component={EditProfile} />
+        <Route path="/sign-up" component={Registration} />
+        <Route path="/sign-in" component={Login} />
+        <Route path="/profile" component={EditProfile} />
         <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />
         <Route path="/new-article" component={CreateArticle} />

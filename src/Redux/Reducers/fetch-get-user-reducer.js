@@ -2,7 +2,7 @@ import {
   FETCH_GET_USER_REQUEST,
   FETCH_GET_USER_SUCCESS,
   FETCH_GET_USER_FAILURE,
-  LOG_OUT,
+  LOG_OUT_USER,
 } from '../Actions/fetch-get-user-action';
 import { EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILURE } from '../Actions/fetch-edit-user-action';
 
@@ -29,7 +29,7 @@ export const getUserReducer = (state = initialState, action) => {
       };
     case FETCH_GET_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
-    case LOG_OUT:
+    case LOG_OUT_USER:
       return { ...state, user: {} };
     case EDIT_USER_REQUEST:
       return {
