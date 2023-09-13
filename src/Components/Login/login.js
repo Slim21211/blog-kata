@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { loginUser } from '../../Redux/Actions/fetch-login-action';
+import { SpinerSmall } from '../Spiner/spiner';
 import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
+import { getUser } from '../../Redux/Actions/fetch-get-user-action';
 
 import styles from './login.module.scss';
 
@@ -17,17 +19,19 @@ const Login = () => {
     input,
     'input-wrong': inputWrong,
     'input-descr': inputDescr,
+    'input-descr-error': inputDescrError,
     button,
     'question-wrapper': questionWrapper,
     question,
     link,
   } = styles;
 
-  const token = localStorage.getItem('token');
-
   const dispatch = useDispatch();
   const history = useHistory();
   const error = useSelector((state) => state.loginReducer.error);
+  const isLoading = useSelector((state) => state.loginReducer.isLoading);
+  const loginToken = useSelector((state) => state.loginReducer.loginToken);
+  const actualToken = localStorage.getItem('token') ? localStorage.getItem('token') : loginToken;
 
   const {
     register,
@@ -41,13 +45,18 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (error?.errors) {
+    if (error?.['email or password']) {
       setError('password', { type: 'manual', message: 'Email or password is invalid' });
     } else if (error === 'no error') {
-      dispatch(fetchArticlesAuth(0, token));
-      history.push('/page/1');
+      (async () => {
+        console.log(1);
+        await dispatch(getUser(loginToken));
+        console.log(2);
+        await dispatch(fetchArticlesAuth(0, actualToken));
+        history.push('/page/1');
+      })();
     }
-  }, [error, history]);
+  }, [error, history, loginToken, actualToken]);
 
   return (
     <div className={wrapper}>
@@ -80,6 +89,7 @@ const Login = () => {
           ></input>
         </label>
         {errors.password && <div className={inputDescr}>{errors.password.message}</div>}
+        {isLoading && <SpinerSmall />}
         <button className={button} type="submit">
           Login
         </button>
@@ -90,6 +100,9 @@ const Login = () => {
           <span className={link}>Sign Up.</span>
         </Link>
       </div>
+      {error && !error['email or password'] && (
+        <div className={inputDescrError}>Something has gone wrong. Try again later</div>
+      )}
     </div>
   );
 };

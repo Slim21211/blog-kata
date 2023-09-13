@@ -1,0 +1,29 @@
+.like-image {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    background: no-repeat url('../../Assets/heart\ 1.svg');
+}
+
+.like-image:hover {
+    cursor: pointer;
+}
+
+.like-image-favorited {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    background: no-repeat url('../../Assets/Heart_corazón\ 1.svg');
+}
+
+.like-image-favorited:hover {
+    cursor: pointer;
+}
+
+.like-count {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color:  rgba(0, 0, 0, 0.75);
+}

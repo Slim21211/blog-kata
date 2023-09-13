@@ -1,16 +1,13 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
-import { fetchFavoriteArticle } from '../../../Redux/Actions/fetch-favorite-article-action';
-import { fetchUnfavoriteArticle } from '../../../Redux/Actions/fetch-unfavorite-article-action';
-import { fetchArticlesAuth } from '../../../Redux/Actions/fetch-articles-action';
 import noAvatar from '../../../Assets/Noavatar.png';
+import Like from '../../Like/like';
 
 import styles from './post.module.scss';
 
-const Post = ({ title, tagList, user, date, description, avatar, likes, slug, favorited, offset }) => {
+const Post = ({ title, tagList, user, date, description, avatar, favoritesCount, slug, favorited }) => {
   const {
     'post-wrapper': postWrapper,
     'post-header-wrapper': postHeaderWrapper,
@@ -20,9 +17,6 @@ const Post = ({ title, tagList, user, date, description, avatar, likes, slug, fa
     'post-title-container': postTitleContainer,
     'post-title-line': postTitleLine,
     'post-title': postTitle,
-    'post-like-image': postLikeImage,
-    'post-like-image-favorited': postLikeImageFavorited,
-    'post-like-count': postLikeCount,
     'post-tags': postTags,
     'post-user-info': postUserInfo,
     'post-user-name': postUserName,
@@ -31,9 +25,6 @@ const Post = ({ title, tagList, user, date, description, avatar, likes, slug, fa
     'tags-wrapper': tagsWrapper,
   } = styles;
 
-  const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
-
   const tags = tagList.map((item) => {
     return (
       <div className={postTags} key={Math.floor(Math.random() * 100)}>
@@ -41,20 +32,6 @@ const Post = ({ title, tagList, user, date, description, avatar, likes, slug, fa
       </div>
     );
   });
-
-  const handleFavorite = async () => {
-    if (token !== null) {
-      await dispatch(fetchFavoriteArticle(slug, token));
-      await dispatch(fetchArticlesAuth(offset, token));
-    }
-  };
-
-  const handleUnFavorite = async () => {
-    if (token !== null) {
-      await dispatch(fetchUnfavoriteArticle(slug, token));
-      await dispatch(fetchArticlesAuth(offset, token));
-    }
-  };
 
   const formattedDate = format(new Date(date), 'MMMM d, yyyy');
 
@@ -67,11 +44,7 @@ const Post = ({ title, tagList, user, date, description, avatar, likes, slug, fa
               <Link to={`/article/${slug}`}>
                 <div className={postTitle}>{title}</div>
               </Link>
-              <div
-                className={favorited ? `${postLikeImageFavorited}` : `${postLikeImage}`}
-                onClick={!favorited ? handleFavorite : handleUnFavorite}
-              ></div>
-              <span className={postLikeCount}>{likes}</span>
+              <Like favorite={favorited} favoritesCount={favoritesCount} slug={slug} />
             </div>
             <div className={tagsWrapper}>{tags}</div>
           </div>

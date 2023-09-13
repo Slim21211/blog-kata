@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { registrationUser } from '../../Redux/Actions/fetch-registration-action';
+import { SpinerSmall } from '../Spiner/spiner';
 
 import styles from './registration.module.scss';
 
@@ -17,6 +18,7 @@ const Registration = () => {
     input,
     'input-wrong': inputWrong,
     'input-descr': inputDescr,
+    'input-descr-error': inputDescrError,
     line,
     check,
     'check-input': checkInput,
@@ -31,6 +33,7 @@ const Registration = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const error = useSelector((state) => state.registrationReducer.error);
+  const isLoading = useSelector((state) => state.registrationReducer.isLoading);
 
   const {
     register,
@@ -76,7 +79,6 @@ const Registration = () => {
           ></input>
         </label>
         {errors.username && <div className={inputDescr}>{errors.username.message}</div>}
-        {/* {usernameError && <div className={inputDescr}>{errors.username.message}</div>} */}
         <label className={label}>
           <div>Email address</div>
           <input
@@ -91,7 +93,6 @@ const Registration = () => {
           ></input>
         </label>
         {errors.email && <div className={inputDescr}>{errors.email.message}</div>}
-        {/* {emailError && <div className={inputDescr}>{errors.email.message}</div>} */}
         <label className={label}>
           <div>Password</div>
           <input
@@ -136,6 +137,7 @@ const Registration = () => {
           <span className={name}>I agree to the processing of my personal information</span>
         </label>
         {errors.agree && <div className={inputDescr}>{errors.agree.message}</div>}
+        {isLoading && <SpinerSmall />}
 
         <button className={button} type="submit">
           Create
@@ -147,6 +149,9 @@ const Registration = () => {
           <span className={link}>Sign In.</span>
         </Link>
       </div>
+      {error && !error.username && !error.email && (
+        <div className={inputDescrError}>Something has gone wrong. Try again later</div>
+      )}
     </div>
   );
 };

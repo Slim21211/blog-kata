@@ -23,8 +23,10 @@ export const App = () => {
 
   useEffect(() => {
     if (token === null) {
+      console.log(1);
       dispatch(fetchArticles(0));
     } else {
+      console.log(2);
       dispatch(fetchArticlesAuth(0, token));
     }
   }, [dispatch]);

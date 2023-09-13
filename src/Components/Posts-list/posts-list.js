@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
 import { useParams, useHistory } from 'react-router-dom';
 
+import { SpinerLarge } from '../Spiner/spiner';
+import Error from '../Error/error';
 import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 
 import Post from './Post/post';
@@ -36,10 +38,10 @@ const PostsList = () => {
   }, [dispatch, pageNumber]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SpinerLarge />;
   }
   if (error !== null) {
-    return <div>ERROR</div>;
+    return <Error />;
   }
   if (articles) {
     return (
@@ -54,7 +56,7 @@ const PostsList = () => {
               date={updatedAt}
               description={body}
               avatar={author.image}
-              likes={favoritesCount}
+              favoritesCount={favoritesCount}
               favorited={favorited}
               slug={slug}
               key={slug}

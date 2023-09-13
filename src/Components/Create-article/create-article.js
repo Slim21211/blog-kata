@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { createArticle } from '../../Redux/Actions/fetch-create-article-action';
 import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { editArticle } from '../../Redux/Actions/fetch-edit-article-action';
+import { SpinerSmall } from '../Spiner/spiner';
 
 import styles from './create-article.module.scss';
 
@@ -26,6 +27,9 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
     'add-btn': addBtn,
     button,
   } = styles;
+
+  const isLoading = useSelector((state) => state.createArticleReducer.isLoading);
+  const error = useSelector((state) => state.createArticleReducer.error);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -182,6 +186,8 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
             </button>
           </div>
         </div>
+        {isLoading && <SpinerSmall />}
+        {error && <div className={inputDescr}>Something has gone wrong. Try again later</div>}
         <button className={button} type="submit">
           Send
         </button>

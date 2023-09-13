@@ -4,13 +4,14 @@ import { useParams, Link, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 
+import { SpinerLarge } from '../Spiner/spiner';
+import Error from '../Error/error';
 import Modal from '../Modal/modal';
 import { fetchOneArticle, fetchOneArticleAuth } from '../../Redux/Actions/fetch-one-article-action';
 import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { fetchDeleteArticle } from '../../Redux/Actions/fetch-delete-article-action';
-import { fetchFavoriteArticle } from '../../Redux/Actions/fetch-favorite-article-action';
-import { fetchUnfavoriteArticle } from '../../Redux/Actions/fetch-unfavorite-article-action';
 import noAvatar from '../../Assets/Noavatar.png';
+import Like from '../Like/like';
 
 import styles from './article.module.scss';
 
@@ -25,9 +26,6 @@ const Article = () => {
     'article-title-container': articleTitleContainer,
     'article-title-line': articleTitleLine,
     'article-title': articleTitle,
-    'article-like-image': articleLikeImage,
-    'article-like-image-favorited': articleLikeImageFavorited,
-    'article-like-count': articleLikeCount,
     'article-tags': articleTags,
     'article-user-info': articleUserInfo,
     'article-user-name': articleUserName,
@@ -43,8 +41,8 @@ const Article = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const article = useSelector((state) => state.oneArticleReducer.article);
-  const isFavorited = useSelector((state) => state.oneArticleReducer.article.article);
   const isLoading = useSelector((state) => state.oneArticleReducer.isLoading);
+  const error = useSelector((state) => state.oneArticleReducer.error);
   const loaded = useSelector((state) => state.oneArticleReducer.loaded);
   const token = localStorage.getItem('token');
   const authorUsername = useSelector((state) => state.oneArticleReducer.authorUsername);
@@ -60,20 +58,6 @@ const Article = () => {
     }
   }, [dispatch, slug, token]);
 
-  const handleFavorite = async () => {
-    if (token !== null) {
-      await dispatch(fetchFavoriteArticle(slug, token));
-      await dispatch(fetchOneArticleAuth(slug, token));
-    }
-  };
-
-  const handleUnFavorite = async () => {
-    if (token !== null) {
-      await dispatch(fetchUnfavoriteArticle(slug, token));
-      await dispatch(fetchOneArticleAuth(slug, token));
-    }
-  };
-
   const approveDelete = () => {
     dispatch(fetchDeleteArticle(slug, token));
     setShouldDelete(false);
@@ -86,10 +70,14 @@ const Article = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <SpinerLarge />;
+  }
+  if (error !== null) {
+    return <Error />;
   }
   if (loaded && article) {
-    const { title, description, body, tagList, author, favoritesCount, createdAt } = article.article;
+    console.log(article.article);
+    const { title, description, body, tagList, author, favoritesCount, createdAt, favorited, slug } = article.article;
     const tag = tagList.map((item) => {
       return (
         <div className={articleTags} key={Math.floor(Math.random() * 100)}>
@@ -105,11 +93,7 @@ const Article = () => {
             <div className={articleTitleContainer}>
               <div className={articleTitleLine}>
                 <div className={articleTitle}>{title}</div>
-                <div
-                  className={!isFavorited.favorited ? articleLikeImage : articleLikeImageFavorited}
-                  onClick={isFavorited.favorited ? handleUnFavorite : handleFavorite}
-                ></div>
-                <span className={articleLikeCount}>{favoritesCount}</span>
+                <Like favorite={favorited} favoritesCount={favoritesCount} slug={slug} />
               </div>
               <div className={tagsWrapper}>{tag}</div>
             </div>

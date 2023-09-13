@@ -4,16 +4,28 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { editUser } from '../../Redux/Actions/fetch-edit-user-action';
+import { SpinerSmall } from '../Spiner/spiner';
 
 import styles from './edit-profile.module.scss';
 
 const EditProfile = () => {
-  const { wrapper, form, title, label, input, 'input-wrong': inputWrong, 'input-descr': inputDescr, button } = styles;
+  const {
+    wrapper,
+    form,
+    title,
+    label,
+    input,
+    'input-wrong': inputWrong,
+    'input-descr': inputDescr,
+    'input-descr-error': inputDescrError,
+    button,
+  } = styles;
 
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.getUserReducer.user);
   const error = useSelector((state) => state.getUserReducer.error);
+  const isLoading = useSelector((state) => state.getUserReducer.isLoading);
 
   const {
     register,
@@ -112,9 +124,13 @@ const EditProfile = () => {
           ></input>
         </label>
         {errors.avatar && <div className={inputDescr}>{errors.avatar.message}</div>}
+        {isLoading && <SpinerSmall />}
         <button className={button} type="submit">
           Save
         </button>
+        {error && !error.username && !error.email && (
+          <div className={inputDescrError}>Something has gone wrong. Try again later</div>
+        )}
       </form>
     </div>
   );
