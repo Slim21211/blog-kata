@@ -1,7 +1,6 @@
 import { React, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
@@ -23,12 +22,13 @@ export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token === null) {
-      console.log(1);
-      dispatch(fetchArticles(0));
-    } else {
-      console.log(2);
-      dispatch(fetchArticlesAuth(0, token));
+    const pageInUrl = window.location.pathname.match(/\/page\/(\d+)/);
+    if (!pageInUrl) {
+      if (token === null) {
+        dispatch(fetchArticles(0));
+      } else {
+        dispatch(fetchArticlesAuth(0, token));
+      }
     }
   }, [dispatch]);
 
@@ -43,7 +43,7 @@ export const App = () => {
           <Route path="/article/:slug" component={Article} />
           <Route path="/new-article" component={CreateArticle} />
           <Route path="/articles/:slug/edit" component={EditArticle} />
-          <Route path="/page/:pageNumber" component={PostsList} />
+          <Route path="/page/:pageNumber?" component={PostsList} />
           <Route path="/" component={PostsList} />
         </Switch>
       </div>

@@ -13,6 +13,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 .post-header-wrapper:first-child {
@@ -20,10 +21,12 @@
 }
 
 .post-title-line {
+    max-width: 600px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 6px;
+    overflow-wrap: break-word;
 }
 
 .post-title {
@@ -32,6 +35,7 @@
     font-style: normal;
     font-weight: 400;
     color:#1890FF;
+   
 }
 
 .post-title:hover {

@@ -22,18 +22,27 @@ const PostsList = () => {
 
   const { pageNumber } = useParams();
   const history = useHistory();
+  console.log(pageNumber);
 
   const changePage = (page) => {
+    console.log('rabotaet');
     setCurrentPage(page);
-
     history.push(`/page/${page}`);
   };
 
   useEffect(() => {
-    if (token === null) {
-      dispatch(fetchArticles((pageNumber - 1) * 5));
+    if (pageNumber) {
+      if (token === null) {
+        dispatch(fetchArticles((pageNumber - 1) * 5));
+      } else {
+        dispatch(fetchArticlesAuth((pageNumber - 1) * 5, token));
+      }
     } else {
-      dispatch(fetchArticlesAuth((pageNumber - 1) * 5, token));
+      if (token === null) {
+        dispatch(fetchArticles(0));
+      } else {
+        dispatch(fetchArticlesAuth(0, token));
+      }
     }
   }, [dispatch, pageNumber]);
 
@@ -66,7 +75,7 @@ const PostsList = () => {
         })}
         <Pagination
           defaultCurrent={currentPage}
-          current={parseInt(pageNumber, 10)}
+          current={pageNumber ? parseInt(pageNumber, 10) : 1}
           total={Math.ceil((articlesCount / 20) * 40)}
           showSizeChanger={false}
           style={{ marginTop: '20px', textAlign: 'center' }}
