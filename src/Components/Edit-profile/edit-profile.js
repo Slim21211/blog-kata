@@ -26,6 +26,7 @@ const EditProfile = () => {
   const user = useSelector((state) => state.getUserReducer.user);
   const error = useSelector((state) => state.getUserReducer.error);
   const isLoading = useSelector((state) => state.getUserReducer.isLoading);
+  const token = localStorage.getItem('token');
 
   const {
     register,
@@ -47,6 +48,9 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
+    if (token === null) {
+      history.push('sign-in');
+    }
     if (error?.username && error?.email) {
       setError('username', { type: 'manual', message: 'This username is already taken or invalid' });
       setError('email', { type: 'manual', message: 'This email is alredy taken' });

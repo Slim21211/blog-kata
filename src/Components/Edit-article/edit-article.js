@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { fetchOneArticle } from '../../Redux/Actions/fetch-one-article-action';
 import CreateArticle from '../Create-article/create-article';
@@ -15,11 +15,16 @@ const EditArticle = () => {
 
   const article = useSelector((state) => state.oneArticleReducer.article);
   const loaded = useSelector((state) => state.oneArticleReducer.loaded);
+  const token = localStorage.getItem('token');
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const { slug } = useParams();
 
   useEffect(() => {
+    if (token === null) {
+      history.push('sign-in');
+    }
     dispatch(fetchOneArticle(slug));
 
     if (loaded) {

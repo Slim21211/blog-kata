@@ -62,6 +62,7 @@ const Header = () => {
     dispatch(logOutSession());
     dispatch(logOutUser());
     dispatch(fetchArticles(0));
+    history.push('/');
   };
 
   const onCreate = () => {

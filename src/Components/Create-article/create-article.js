@@ -30,6 +30,8 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
 
   const isLoading = useSelector((state) => state.createArticleReducer.isLoading);
   const error = useSelector((state) => state.createArticleReducer.error);
+  const token = localStorage.getItem('token');
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -40,6 +42,9 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
   const [tagValue, setTagValue] = useState('');
 
   useEffect(() => {
+    if (token === null) {
+      history.push('sign-in');
+    }
     if (isEditing) {
       setFormData({
         title: articleData.title,
@@ -51,10 +56,9 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
       setValue('description', articleData.description);
       setValue('body', articleData.body);
     }
-  }, [isEditing, articleData]);
+  }, [isEditing, articleData, history]);
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const addTag = (event) => {
     event.preventDefault();

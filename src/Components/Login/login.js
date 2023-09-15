@@ -49,9 +49,7 @@ const Login = () => {
       setError('password', { type: 'manual', message: 'Email or password is invalid' });
     } else if (error === 'no error') {
       (async () => {
-        console.log(1);
         await dispatch(getUser(loginToken));
-        console.log(2);
         await dispatch(fetchArticlesAuth(0, actualToken));
         history.push('/page/1');
       })();
@@ -100,7 +98,7 @@ const Login = () => {
           <span className={link}>Sign Up.</span>
         </Link>
       </div>
-      {error && !error['email or password'] && (
+      {error && !error['email or password'] && error !== 'no error' && (
         <div className={inputDescrError}>Something has gone wrong. Try again later</div>
       )}
     </div>
