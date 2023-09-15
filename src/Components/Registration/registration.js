@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { registrationUser } from '../../Redux/Actions/fetch-registration-action';
 import { SpinerSmall } from '../Spiner/spiner';
+import { SIGN_IN } from '../../routePath';
 
 import styles from './registration.module.scss';
 
@@ -56,7 +57,7 @@ const Registration = () => {
     } else if (error?.email) {
       setError('email', { type: 'manual', message: 'This email is alredy taken' });
     } else if (error === 'no error') {
-      history.push('/sign-in');
+      history.push(SIGN_IN);
     }
   }, [error, history]);
 
@@ -145,7 +146,7 @@ const Registration = () => {
       </form>
       <div className={questionWrapper}>
         <span className={question}>Already have an account? </span>
-        <Link to="/sign-in">
+        <Link to={SIGN_IN}>
           <span className={link}>Sign In.</span>
         </Link>
       </div>

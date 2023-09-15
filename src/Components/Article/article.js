@@ -12,6 +12,7 @@ import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { fetchDeleteArticle } from '../../Redux/Actions/fetch-delete-article-action';
 import noAvatar from '../../Assets/Noavatar.png';
 import Like from '../Like/like';
+import { EDIT_ARTICLE, HOME } from '../../routePath';
 
 import styles from './article.module.scss';
 
@@ -62,7 +63,7 @@ const Article = () => {
     dispatch(fetchDeleteArticle(slug, token));
     setShouldDelete(false);
     dispatch(fetchArticlesAuth(0));
-    history.push('/page/1');
+    history.push(HOME);
   };
 
   const cancelModal = () => {
@@ -76,7 +77,6 @@ const Article = () => {
     return <Error />;
   }
   if (loaded && article) {
-    console.log(article.article);
     const { title, description, body, tagList, author, favoritesCount, createdAt, favorited, slug } = article.article;
     const tag = tagList.map((item) => {
       return (
@@ -122,7 +122,7 @@ const Article = () => {
               </button>
               {shouldDelete && <Modal onApprove={approveDelete} onCancel={cancelModal} />}
               <div className={editBtnWrapper}>
-                <Link style={{ height: 31.098 }} to={`/articles/${slug}/edit`}>
+                <Link style={{ height: 31.098 }} to={EDIT_ARTICLE}>
                   <button className={editBtn}>Edit</button>
                 </Link>
               </div>

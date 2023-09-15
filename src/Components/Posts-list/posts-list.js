@@ -6,6 +6,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { SpinerLarge } from '../Spiner/spiner';
 import Error from '../Error/error';
 import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
+import { PAGE } from '../../routePath';
 
 import Post from './Post/post';
 import styles from './post-list.module.scss';
@@ -22,12 +23,10 @@ const PostsList = () => {
 
   const { pageNumber } = useParams();
   const history = useHistory();
-  console.log(pageNumber);
 
   const changePage = (page) => {
-    console.log('rabotaet');
     setCurrentPage(page);
-    history.push(`/page/${page}`);
+    history.push(PAGE.replace(':pageNumber', page));
   };
 
   useEffect(() => {

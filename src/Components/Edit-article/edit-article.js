@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 
 import { fetchOneArticle } from '../../Redux/Actions/fetch-one-article-action';
 import CreateArticle from '../Create-article/create-article';
+import { SIGN_IN } from '../../routePath';
 
 const EditArticle = () => {
   const [articleData, setArticleData] = useState({
@@ -23,7 +24,7 @@ const EditArticle = () => {
 
   useEffect(() => {
     if (token === null) {
-      history.push('sign-in');
+      history.push(SIGN_IN);
     }
     dispatch(fetchOneArticle(slug));
 

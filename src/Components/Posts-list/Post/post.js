@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import noAvatar from '../../../Assets/Noavatar.png';
 import Like from '../../Like/like';
+import { ARTICLE } from '../../../routePath';
 
 import styles from './post.module.scss';
 
@@ -41,7 +42,7 @@ const Post = ({ title, tagList, user, date, description, avatar, favoritesCount,
         <div className={postTitleWrapper}>
           <div className={postTitleContainer}>
             <div className={postTitleLine}>
-              <Link to={`/article/${slug}`}>
+              <Link to={ARTICLE.replace(':slug', slug)}>
                 <div className={postTitle}>{title}</div>
               </Link>
               <Like favorite={favorited} favoritesCount={favoritesCount} slug={slug} />

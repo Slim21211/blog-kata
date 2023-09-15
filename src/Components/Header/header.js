@@ -8,6 +8,7 @@ import { getUser, logOutUser } from '../../Redux/Actions/fetch-get-user-action';
 import { startRegistration } from '../../Redux/Actions/fetch-registration-action';
 import { fetchArticles } from '../../Redux/Actions/fetch-articles-action';
 import { logOutSession } from '../../Redux/Actions/fetch-login-action';
+import { HOME, NEW_ARTICLE, PROFILE, SIGN_IN, SIGN_UP } from '../../routePath';
 
 import styles from './header.module.scss';
 
@@ -46,15 +47,15 @@ const Header = () => {
 
   const onSignUp = async () => {
     dispatch(startRegistration());
-    history.push('/sign-up');
+    history.push(SIGN_UP);
   };
 
   const onSignIn = () => {
-    history.push('/sign-in');
+    history.push(SIGN_IN);
   };
 
   const onEditProfile = () => {
-    history.push('/profile');
+    history.push(PROFILE);
   };
 
   const logOut = () => {
@@ -62,16 +63,16 @@ const Header = () => {
     dispatch(logOutSession());
     dispatch(logOutUser());
     dispatch(fetchArticles(0));
-    history.push('/');
+    history.push(HOME);
   };
 
   const onCreate = () => {
-    history.push('/new-article');
+    history.push(NEW_ARTICLE);
   };
 
   return (
     <div className={headerWrapper}>
-      <Link to="/page/1" className={headerTitle}>
+      <Link to={HOME} className={headerTitle}>
         Realworld Blog
       </Link>
       <div className={loginWrapper}>

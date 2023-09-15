@@ -11,6 +11,7 @@ import Login from '../Login/login';
 import EditProfile from '../Edit-profile/edit-profile';
 import CreateArticle from '../Create-article/create-article';
 import EditArticle from '../Edit-article/edit-article';
+import { SIGN_UP, SIGN_IN, PROFILE, ARTICLE, NEW_ARTICLE, EDIT_ARTICLE, PAGE, HOME } from '../../routePath';
 
 import styles from './app.module.scss';
 
@@ -37,14 +38,14 @@ export const App = () => {
       <div className={mainWrapper}>
         <Header />
         <Switch>
-          <Route path="/sign-up" component={Registration} />
-          <Route path="/sign-in" component={Login} />
-          <Route path="/profile" component={EditProfile} />
-          <Route path="/article/:slug" component={Article} />
-          <Route path="/new-article" component={CreateArticle} />
-          <Route path="/articles/:slug/edit" component={EditArticle} />
-          <Route path="/page/:pageNumber?" component={PostsList} />
-          <Route path="/" component={PostsList} />
+          <Route path={SIGN_UP} component={Registration} />
+          <Route path={SIGN_IN} component={Login} />
+          <Route path={PROFILE} component={EditProfile} />
+          <Route path={ARTICLE} component={Article} />
+          <Route path={NEW_ARTICLE} component={CreateArticle} />
+          <Route path={EDIT_ARTICLE} component={EditArticle} />
+          <Route path={PAGE} component={PostsList} />
+          <Route path={HOME} component={PostsList} />
         </Switch>
       </div>
     </Router>

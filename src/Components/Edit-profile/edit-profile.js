@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { editUser } from '../../Redux/Actions/fetch-edit-user-action';
 import { SpinerSmall } from '../Spiner/spiner';
+import { HOME, SIGN_IN } from '../../routePath';
 
 import styles from './edit-profile.module.scss';
 
@@ -49,7 +50,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (token === null) {
-      history.push('sign-in');
+      history.push(SIGN_IN);
     }
     if (error?.username && error?.email) {
       setError('username', { type: 'manual', message: 'This username is already taken or invalid' });
@@ -59,7 +60,7 @@ const EditProfile = () => {
     } else if (error?.email) {
       setError('email', { type: 'manual', message: 'This email is alredy taken' });
     } else if (error === 'no error') {
-      history.push('/page/1');
+      history.push(HOME);
     }
   }, [error, history]);
 

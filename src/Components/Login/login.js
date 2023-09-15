@@ -7,6 +7,7 @@ import { loginUser } from '../../Redux/Actions/fetch-login-action';
 import { SpinerSmall } from '../Spiner/spiner';
 import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { getUser } from '../../Redux/Actions/fetch-get-user-action';
+import { HOME, SIGN_UP } from '../../routePath';
 
 import styles from './login.module.scss';
 
@@ -51,7 +52,7 @@ const Login = () => {
       (async () => {
         await dispatch(getUser(loginToken));
         await dispatch(fetchArticlesAuth(0, actualToken));
-        history.push('/page/1');
+        history.push(HOME);
       })();
     }
   }, [error, history, loginToken, actualToken]);
@@ -94,7 +95,7 @@ const Login = () => {
       </form>
       <div className={questionWrapper}>
         <span className={question}>Don’t have an account? </span>
-        <Link to="/registration">
+        <Link to={SIGN_UP}>
           <span className={link}>Sign Up.</span>
         </Link>
       </div>

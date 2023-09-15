@@ -7,6 +7,7 @@ import { createArticle } from '../../Redux/Actions/fetch-create-article-action';
 import { fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import { editArticle } from '../../Redux/Actions/fetch-edit-article-action';
 import { SpinerSmall } from '../Spiner/spiner';
+import { HOME, SIGN_IN } from '../../routePath';
 
 import styles from './create-article.module.scss';
 
@@ -43,7 +44,7 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
 
   useEffect(() => {
     if (token === null) {
-      history.push('sign-in');
+      history.push(SIGN_IN);
     }
     if (isEditing) {
       setFormData({
@@ -89,11 +90,11 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
 
       dispatch(createArticle(data, token));
       dispatch(fetchArticlesAuth(0));
-      history.push('/page/1');
+      history.push(HOME);
     } else {
       dispatch(editArticle(data, slug, token));
       dispatch(fetchArticlesAuth(0));
-      history.push('/page/1');
+      history.push(HOME);
     }
   };
 
