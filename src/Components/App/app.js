@@ -38,10 +38,11 @@ export const App = () => {
         <Route path="/sign-up" component={Registration} />
         <Route path="/sign-in" component={Login} />
         <Route path="/profile" component={EditProfile} />
-        <Route path="/page/:pageNumber" component={PostsList} />
         <Route path="/article/:slug" component={Article} />
         <Route path="/new-article" component={CreateArticle} />
         <Route path="/articles/:slug/edit" component={EditArticle} />
+        <Route path="/page/:pageNumber" component={PostsList} />
+        <Route path="/" component={PostsList} />
       </div>
     </Router>
   );
