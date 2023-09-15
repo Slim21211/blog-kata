@@ -1,6 +1,6 @@
 import { React, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
@@ -35,7 +35,6 @@ export const App = () => {
     <Router>
       <div className={mainWrapper}>
         <Header />
-        <Redirect from="/" to="/page/1" />
         <Route path="/sign-up" component={Registration} />
         <Route path="/sign-in" component={Login} />
         <Route path="/profile" component={EditProfile} />
