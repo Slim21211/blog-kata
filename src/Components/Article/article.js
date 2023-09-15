@@ -103,7 +103,14 @@ const Article = () => {
               <div className={articleUserName}>{author.username}</div>
               <div className={articleDate}>{formattedDate}</div>
             </div>
-            <img src={author.image ? author.image : noAvatar} alt="avatar" className={articleUserImage}></img>
+            <img
+              src={author.image ? author.image : noAvatar}
+              alt="avatar"
+              className={articleUserImage}
+              onError={(event) => {
+                event.target.src = noAvatar;
+              }}
+            ></img>
           </div>
         </div>
         <div className={articleDescriptionWrapper}>

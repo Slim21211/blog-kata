@@ -90,6 +90,9 @@ const Header = () => {
             src={!user.user || !user.user.image ? noAvatar : user.user.image}
             className={isLoged ? userImageLog : userImage}
             alt="avatar"
+            onError={(event) => {
+              event.target.src = noAvatar;
+            }}
           ></img>
         </div>
         <button className={isLoged ? logOutButtonLog : logOutButton} onClick={logOut}>

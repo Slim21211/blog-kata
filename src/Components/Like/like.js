@@ -17,14 +17,16 @@ const Like = ({ favorite: initialFavorite, favoritesCount: initialCount, slug })
   const dispatch = useDispatch();
 
   const onToggleFavorite = async () => {
-    if (!isFavorited) {
-      await dispatch(fetchFavoriteArticle(slug, token));
-      setIsFavoritesCount(isFavoritesCount + 1);
-    } else {
-      await dispatch(fetchUnfavoriteArticle(slug, token));
-      setIsFavoritesCount(isFavoritesCount - 1);
+    if (token !== null) {
+      if (!isFavorited) {
+        await dispatch(fetchFavoriteArticle(slug, token));
+        setIsFavoritesCount(isFavoritesCount + 1);
+      } else {
+        await dispatch(fetchUnfavoriteArticle(slug, token));
+        setIsFavoritesCount(isFavoritesCount - 1);
+      }
+      setIsFavorited(!isFavorited);
     }
-    setIsFavorited(!isFavorited);
   };
   return (
     <>

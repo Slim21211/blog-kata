@@ -66,7 +66,8 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
     setTagValue('');
   };
 
-  const deleteTag = (index) => {
+  const deleteTag = (event, index) => {
+    event.preventDefault();
     const updatedTags = [...formData.tags];
     updatedTags.splice(index, 1);
     setFormData({ ...formData, tags: updatedTags });
@@ -152,7 +153,6 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
                     placeholder="Tag"
                     value={elem}
                     onChange={(event) => {
-                      console.log(event.target.value);
                       setFormData((prevData) => ({
                         ...prevData,
                         title: event.target.value,
@@ -160,7 +160,7 @@ const CreateArticle = ({ isEditing, articleData, slug }) => {
                     }}
                   />
                 </label>
-                <button className={deleteBtn} onClick={() => deleteTag(index)}>
+                <button className={deleteBtn} onClick={(event) => deleteTag(event, index)}>
                   Delete
                 </button>
               </div>

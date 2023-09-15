@@ -1,7 +1,7 @@
 import { React } from 'react';
 import { createRoot } from 'react-dom/client';
 import reduxThunk from 'redux-thunk';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { Provider } from 'react-redux';
 
 import { articleReducer } from './Redux/Reducers/fetch-articles-reducer';
@@ -23,13 +23,15 @@ const rootReducer = combineReducers({
   deleteArticleReducer,
 });
 
+const devTool = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const loggerMiddleware = (store) => (next) => (action) => {
   const result = next(action);
   console.log('Middleware', store.getState());
   return result;
 };
 
-const store = createStore(rootReducer, applyMiddleware(loggerMiddleware, reduxThunk));
+const store = createStore(rootReducer, devTool(applyMiddleware(loggerMiddleware, reduxThunk)));
 
 const container = document.getElementById('root');
 const root = createRoot(container);

@@ -54,7 +54,14 @@ const Post = ({ title, tagList, user, date, description, avatar, favoritesCount,
             <div className={postUserName}>{user}</div>
             <div className={postDate}>{formattedDate}</div>
           </div>
-          <img src={avatar ? avatar : noAvatar} alt="avatar" className={postUserImage}></img>
+          <img
+            src={avatar ? avatar : noAvatar}
+            alt="avatar"
+            onError={(event) => {
+              event.target.src = noAvatar;
+            }}
+            className={postUserImage}
+          ></img>
         </div>
       </div>
       <div className={postDescription}>{description}</div>
