@@ -1,6 +1,7 @@
 import { React, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { fetchArticles, fetchArticlesAuth } from '../../Redux/Actions/fetch-articles-action';
 import Header from '../Header/header';
@@ -35,14 +36,16 @@ export const App = () => {
     <Router>
       <div className={mainWrapper}>
         <Header />
-        <Route path="/sign-up" component={Registration} />
-        <Route path="/sign-in" component={Login} />
-        <Route path="/profile" component={EditProfile} />
-        <Route path="/article/:slug" component={Article} />
-        <Route path="/new-article" component={CreateArticle} />
-        <Route path="/articles/:slug/edit" component={EditArticle} />
-        <Route path="/page/:pageNumber" component={PostsList} />
-        <Route path="/" component={PostsList} />
+        <Switch>
+          <Route path="/sign-up" component={Registration} />
+          <Route path="/sign-in" component={Login} />
+          <Route path="/profile" component={EditProfile} />
+          <Route path="/article/:slug" component={Article} />
+          <Route path="/new-article" component={CreateArticle} />
+          <Route path="/articles/:slug/edit" component={EditArticle} />
+          <Route path="/page/:pageNumber" component={PostsList} />
+          <Route path="/" component={PostsList} />
+        </Switch>
       </div>
     </Router>
   );
