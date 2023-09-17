@@ -1,6 +1,7 @@
 export const EDIT_USER_REQUEST = 'EDIT_USER_REQUEST';
 export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
 export const EDIT_USER_FAILURE = 'EDIT_USER_FAILURE';
+export const DELETE_ERROR = 'DELETE_ERROR';
 
 export const editUserRequest = () => ({
   type: EDIT_USER_REQUEST,
@@ -14,6 +15,10 @@ export const editUserSuccess = (user) => ({
 export const editUserFailure = (error) => ({
   type: EDIT_USER_FAILURE,
   payload: error,
+});
+
+export const deleteError = () => ({
+  type: DELETE_ERROR,
 });
 
 export const editUser = (userData, token) => {

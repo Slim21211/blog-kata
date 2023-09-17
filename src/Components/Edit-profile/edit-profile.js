@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { editUser } from '../../Redux/Actions/fetch-edit-user-action';
+import { deleteError, editUser } from '../../Redux/Actions/fetch-edit-user-action';
 import { SpinerSmall } from '../Spiner/spiner';
 import { HOME, SIGN_IN } from '../../routePath';
 
@@ -60,6 +60,7 @@ const EditProfile = () => {
     } else if (error?.email) {
       setError('email', { type: 'manual', message: 'This email is alredy taken' });
     } else if (error === 'no error') {
+      dispatch(deleteError());
       history.push(HOME);
     }
   }, [error, history]);

@@ -4,7 +4,12 @@ import {
   FETCH_GET_USER_FAILURE,
   LOG_OUT_USER,
 } from '../Actions/fetch-get-user-action';
-import { EDIT_USER_REQUEST, EDIT_USER_SUCCESS, EDIT_USER_FAILURE } from '../Actions/fetch-edit-user-action';
+import {
+  EDIT_USER_REQUEST,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAILURE,
+  DELETE_ERROR,
+} from '../Actions/fetch-edit-user-action';
 
 const initialState = {
   user: {},
@@ -53,6 +58,11 @@ export const getUserReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case DELETE_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
